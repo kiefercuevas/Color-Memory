@@ -1,0 +1,24 @@
+<div class="content">
+    <div>
+        <div>
+            <app-score [score]="score" 
+                       [waitForStart] = "disableColorBoxes"
+                       [highScore]="highScore" 
+                       [level]="level"></app-score>
+        </div>
+    </div>
+    <hr />
+    <div>
+        <div class="colorContainer">
+            <app-color *ngFor="let color of colors"
+                class="item"
+                [color]=color
+                [state]="color.state"
+                [ngStyle]="boxStyles"
+                [disableClick]="disableColorBoxes"
+                [velocity]= "velocity"
+                (sendColorId) = "validateClickedId($event)">
+            </app-color>
+        </div>
+    </div>
+</div>

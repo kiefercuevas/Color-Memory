@@ -1,0 +1,31 @@
+import { Color } from '../models/color';
+
+
+export const colors:Color[] = [
+    {name:"#C33C23",state:false,id:1},
+    {name:"#DC453D",state:false,id:2},
+    {name:"#FFFD96",state:false,id:3},
+    {name:"#FFB447",state:false,id:4},
+    {name:"#2424ff",state:false,id:5},
+    {name:"#ADE6D0",state:false,id:6},
+    {name:"#F1F0CF",state:false,id:7},
+    {name:"#EBCEED",state:false,id:8},
+    {name:"#DEB3EB",state:false,id:9},
+    {name:"#769ECB",state:false,id:10},
+    {name:"#C8D6B9",state:false,id:11},
+    {name:"#7CAA98",state:false,id:12},
+    {name:"#FECBA5",state:false,id:13},
+    {name:"#677880",state:false,id:14},
+    {name:"#EC6FB0",state:false,id:15},
+    {name:"#C1C204",state:false,id:16},
+    {name:"#067C4D",state:false,id:17},
+    {name:"#F85F41",state:false,id:18},
+    {name:"#0080ff",state:false,id:19},
+    {name:"#0275d8",state:false,id:20},
+    {name:"#5cb85c",state:false,id:21},
+    {name:"#5bc0de",state:false,id:22},
+    {name:"#f0ad4e",state:false,id:23},
+    {name:"#d9534f",state:false,id:24},
+    {name:"#292b2c",state:false,id:25},
+    {name:"#f7f7f7",state:false,id:26},
+]
