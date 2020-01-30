@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output } from '@angular/core';
+import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-score',
@@ -11,10 +12,17 @@ export class ScoreComponent implements OnInit {
   @Input() highScore:number;
   @Input() level:number;
   @Input() waitForStart:boolean;
+  @Input() disableStarButton:boolean;
+  @Output() startGameEvent = new EventEmitter();
+
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  startGame(){
+    this.startGameEvent.emit();
   }
 
 }

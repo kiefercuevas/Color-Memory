@@ -3,3 +3,4 @@
 <h4>Nivel {{level}}</h4>
 <p>Puntuación mas alta: {{highScore}}</p>
 <p  class="message" *ngIf="waitForStart">Espera a que termine el proceso</p>
+<button (click)="startGame()" *ngIf="!disableStarButton"> Comenzar</button>

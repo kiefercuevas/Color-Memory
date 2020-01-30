@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Color } from '../../models/color';
 import { colors } from '../../mocks/colors';
+import { wait } from 'src/app/helpers/wait';
+import { shuffleArray } from 'src/app/helpers/shuffeArray';
 
 @Component({
   selector: 'app-main-board',
@@ -21,6 +23,8 @@ export class MainBoardComponent implements OnInit {
   disableColorBoxes:boolean;
   velocity:number;
   level:number;
+  amountOfIndex:number
+  isStartButtonDisabled:boolean
 
   constructor() {
 
@@ -34,13 +38,12 @@ export class MainBoardComponent implements OnInit {
     this.disableColorBoxes = false;
     this.velocity = 1000;
     this.level = 1;
+    this.amountOfIndex = 4;
     this.setColumnCalculation(this.amountOfColumns);
   }
 
   ngOnInit() {
     //Execute
-    this.increaseColorList(0);
-    this.addRandomIndex();
   }
 
   setColumnCalculation(columnAmount:number){
@@ -57,18 +60,19 @@ export class MainBoardComponent implements OnInit {
     
     //Take the amount of column * 2 so if we have 3 column it will bring 6 colors
     this.setColumnCalculation(this.amountOfColumns);
-    this.colors = this.shuffleArray(colors).slice(0 , this.amountOfColumns * 2);
+    this.colors = shuffleArray<Color>(colors).slice(0 , this.amountOfColumns * 2);
     this.randomColorsIds = [];
 
     //Bajando la velocidad para aumentar un poco la dificultad, hasta 500
-    if(this.velocity > 500){
+    if(this.velocity > 300){
       this.velocity -= 100;
     }
   }
   
   async addRandomIndex(){
-    if(this.randomColorsIds.length == 5){
+    if(this.randomColorsIds.length == this.amountOfIndex){
       this.increaseColorList();
+      this.amountOfIndex++;
     }
 
     let colorIds = this.colors.map(c => c.id);
@@ -84,8 +88,10 @@ export class MainBoardComponent implements OnInit {
       let c = this.colors.find(c => c.id == id);
       c.state = true;
       while(c.state){
-        await this.wait(500);
+        await wait(this.velocity / 2);
       }
+      
+      await wait(100);
     }
     this.disableColorBoxes = false;
   }
@@ -98,7 +104,7 @@ export class MainBoardComponent implements OnInit {
       if(this.colorOrderIndex == this.randomColorsIds.length){
         alert("Bien hecho!!");
         
-        await this.wait(200);
+        await wait(200);
         this.colorOrderIndex = 0;
         this.score += 100;
         this.level++;
@@ -107,37 +113,27 @@ export class MainBoardComponent implements OnInit {
     }else{
       alert("Perdiste!!!");
 
-      await this.wait(200);
+      await wait(200);
       this.randomColorsIds = [];
       this.colorOrderIndex = 0;
-      this.highScore += this.score;
+      this.highScore = this.score > this.highScore ? this.score : this.highScore;
       this.score = 0;
       this.level = 1;
+      this.isStartButtonDisabled = false;
       this.resetColumns();
-      await this.addRandomIndex();
     }
-
-    //this.setColorStateToFalse();
   }
 
   resetColumns(){
-    this.amountOfColumns = 2;
+    this.amountOfColumns = 0;
     this.increaseColorList(0);
   }
 
-
-
-
-  private wait(milliseconds:number){
-    return new Promise(resolve => setTimeout(resolve, milliseconds)); 
-  }
-
-  private shuffleArray(array:Color[]) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
+  startGame(){
+    this.isStartButtonDisabled = true;
+    this.amountOfColumns = 2;
+    this.increaseColorList(0);
+    this.addRandomIndex();
   }
 
 }

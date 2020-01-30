@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output } from '@angular/core';
 import { Color } from 'src/app/models/color';
 import { EventEmitter } from '@angular/core';
+import { wait } from 'src/app/helpers/wait';
 
 @Component({
   selector: 'app-color',
@@ -37,9 +38,10 @@ export class ColorComponent implements OnInit {
 
   doNothing(){};
 
-  changeBoxColor(){
-    setTimeout(() => {
-      this.color.state = false;
-    }, this.velocity);
+  async changeBoxColor(){
+    await wait(this.velocity);
+    this.color.state = false;
   }
+
+
 }

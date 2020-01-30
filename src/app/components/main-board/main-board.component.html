@@ -3,7 +3,9 @@
         <div>
             <app-score [score]="score" 
                        [waitForStart] = "disableColorBoxes"
-                       [highScore]="highScore" 
+                       [highScore]="highScore"
+                       (startGameEvent) = "startGame()"
+                       [disableStarButton] = "isStartButtonDisabled"
                        [level]="level"></app-score>
         </div>
     </div>
